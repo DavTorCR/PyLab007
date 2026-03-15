@@ -56,9 +56,9 @@ def decrypt_vigenere(key, cipher_text, alphabet):
             counter += 1
     return ''.join(plaintext)
 
-def enc_menu(key, alphabet):
+def enc_menu(key, alphabet, encrypted_list):
     plaintext = input("Enter the text you'd like to encrypt: ")
-    return encrypt_vigenere(key, plaintext, alphabet)
+    encrypted_list.append(encrypt_vigenere(key, plaintext, alphabet))
 
 def dec_menu(key, alphabet, encrypted_list):
     for cipher_text in encrypted_list:
@@ -75,7 +75,7 @@ def main():
     encrypted_list = []
 
     menu = [
-        ['1). Encrypt', enc_menu, [key, alphabet]],
+        ['1). Encrypt', enc_menu, [key, alphabet, encrypted_list]],
         ['2). Decrypt', dec_menu, [key, alphabet, encrypted_list]],
         ['3). Dump Decrypt', dec_dump_menu, [encrypted_list]],
         ['4). Quit', exit, [0]]
@@ -89,10 +89,10 @@ def main():
             if not (0 < choice <= len(menu)):
                 print("improper choice")
             else:
-                menu[choice-1][1](*menu[choice-1][2])
-        except:
+                menu[choice - 1][1](*menu[choice - 1][2])
+        except ValueError as ignored:
             print("Improper choice, you must enter an integer between 1 and 4")
-
+    #try:
     #for _ in range(3):
     #    encrypted_list.append(
     #        menu[0][1](*menu[0][2]))
